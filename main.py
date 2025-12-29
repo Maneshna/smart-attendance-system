@@ -7,6 +7,7 @@ presence_count = {s: 0 for s in students}
 
 TOTAL_DURATION = 60
 NUM_SAMPLES = 10
+PRESENCE_THRESHOLD = 6
 
 def generate_random_times(total_minutes, num_samples):
     return sorted(random.sample(range(total_minutes), num_samples))
@@ -14,7 +15,6 @@ def generate_random_times(total_minutes, num_samples):
 def mock_detected_students():
     """
     Simulate detected students in a time window.
-    Some students may appear multiple times.
     """
     detections = []
     num_detections = random.randint(1, len(students))
@@ -24,25 +24,38 @@ def mock_detected_students():
 
     return detections
 
+# Generate random attendance check times
 sample_times = generate_random_times(TOTAL_DURATION, NUM_SAMPLES)
 
 print("Attendance check times:", sample_times)
-print("-" * 40)
+print("=" * 50)
 
+# Presence counting
 for time_point in sample_times:
     detected = mock_detected_students()
     unique_students = set(detected)
 
     print(f"Minute {time_point}: detected -> {detected}")
-    print(f"Unique counted -> {unique_students}")
+    print(f"Counted once -> {unique_students}")
 
     for student in unique_students:
         presence_count[student] += 1
 
-    print("-" * 40)
+    print("-" * 50)
 
-print("Final presence counts:")
+# Attendance decision
+print("\nFINAL ATTENDANCE REPORT")
+print("=" * 50)
+
+attendance_status = {}
+
 for student, count in presence_count.items():
-    print(student, ":", count)
+    if count >= PRESENCE_THRESHOLD:
+        attendance_status[student] = "Present"
+    else:
+        attendance_status[student] = "Absent"
+
+    print(f"{student} | Seen {count}/10 times | {attendance_status[student]}")
+
 
 

@@ -13,11 +13,11 @@ def generate_random_times(total_minutes, num_samples):
     return sorted(random.sample(range(total_minutes), num_samples))
 
 def mock_detected_students():
-    """
     Simulate detected students in a time window.
+    May return an empty list (edge case).
     """
     detections = []
-    num_detections = random.randint(1, len(students))
+    num_detections = random.randint(0, len(students))
 
     for _ in range(num_detections):
         detections.append(random.choice(students))

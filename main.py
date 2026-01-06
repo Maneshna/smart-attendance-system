@@ -45,17 +45,13 @@ for time_point in sample_times:
 
 # Attendance decision
 print("\nFINAL ATTENDANCE REPORT")
-print("=" * 50)
-
-attendance_status = {}
+print("=" * 60)
+print(f"{'Student':<10}{'Seen':<10}{'Status'}")
+print("-" * 60)
 
 for student, count in presence_count.items():
-    if count >= PRESENCE_THRESHOLD:
-        attendance_status[student] = "Present"
-    else:
-        attendance_status[student] = "Absent"
-
-    print(f"{student} | Seen {count}/10 times | {attendance_status[student]}")
+    status = "Present" if count >= PRESENCE_THRESHOLD else "Absent"
+    print(f"{student:<10}{count}/10     {status}")
 
 
 
